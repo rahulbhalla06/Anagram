@@ -16,7 +16,7 @@ public class ExceptionHandlerAdvice {
 
 	@ExceptionHandler(InvalidStringException.class)
 	public ResponseEntity<String> invaldString(InvalidStringException ex) {
-		log.error("", ex);
+		log.error("e", ex);
 		return new ResponseEntity<>(
 				"HTTP 400: BAD REQUEST"
 				, HttpStatus.BAD_REQUEST);
