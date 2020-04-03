@@ -1,4 +1,4 @@
-package com.viafoura.Anagram.service;
+package com.viafoura.Anagram.domain;
 
 import java.util.HashSet;
 
@@ -22,6 +22,8 @@ public class AnagramService {
 				return false;
 			}
 			
+			s1=s1.toLowerCase();
+			s2=s2.toLowerCase();
 			strb = new StringBuilder(s2);
 			arrs1 = s1.split("");
 
@@ -40,42 +42,32 @@ public class AnagramService {
 
 		return false;
 	}
-
-
-	/** 
-	 * Swap Characters at position 
-	 * @param a string value 
-	 * @param i position 1 
-	 * @param j position 2 
-	 * @return swapped string 
-	 */
-	private String swap(String a, int i, int j) 
+	
+	private String swapChars(String str, int i, int j) 
 	{ 
-		char temp; 
-		char[] charArray = a.toCharArray(); 
-		temp = charArray[i] ; 
-		charArray[i] = charArray[j]; 
-		charArray[j] = temp; 
-		return String.valueOf(charArray); 
+		StringBuilder sb = new StringBuilder(str); 
+        sb.setCharAt(i, str.charAt(j)); 
+        sb.setCharAt(j, str.charAt(i)); 
+        return sb.toString(); 
 	}
 
-	/** 
-	 * permutation function 
-	 * @param str string to calculate permutation for 
-	 * @param l starting index 
-	 * @param r end index 
-	 */
-	public void permute(String str, int l, int r) 
+	public HashSet<String> getAllAnagrams(String str) {
+		anagramSet.clear();
+		getAllAnagrams(str, 0, str.length()-1);
+		return anagramSet;
+	}
+	
+	private void getAllAnagrams(String str, int start, int end) 
 	{ 
-		if (l == r) 
-			anagramSet.add(str); 
+		if (start == end) 
+			anagramSet.add(str); // To get unique anagrams
 		else
 		{ 
-			for (int i = l; i <= r; i++) 
+			for (int i = start; i <= end; i++) 
 			{ 
-				str = swap(str,l,i); 
-				permute(str, l+1, r); 
-				str = swap(str,l,i); 
+				str = swapChars(str,start,i); 
+				getAllAnagrams(str, start+1, end); 
+				str = swapChars(str,start,i); 
 			} 
 		} 
 	} 
