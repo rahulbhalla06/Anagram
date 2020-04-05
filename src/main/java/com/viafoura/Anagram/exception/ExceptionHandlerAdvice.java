@@ -15,10 +15,10 @@ public class ExceptionHandlerAdvice {
     private static Logger log = LoggerFactory.getLogger(ExceptionHandlerAdvice.class);
 
 	@ExceptionHandler(InvalidStringException.class)
-	public ResponseEntity<String> invaldString(InvalidStringException ex) {
+	public ResponseEntity<ErrorInfo> invaldString(InvalidStringException ex) {
 		log.error("e", ex);
 		return new ResponseEntity<>(
-				"HTTP 400: BAD REQUEST"
+				new ErrorInfo("HTTP 404", "BAD REQUEST")
 				, HttpStatus.BAD_REQUEST);
 	}
 	
